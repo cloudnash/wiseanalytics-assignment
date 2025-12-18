@@ -1,1 +1,139 @@
-this is main
+📌 ##Project Overview
+
+This project demonstrates a complete CI/CD pipeline that automatically builds, pushes, and deploys a containerized web application to a self-managed Kubernetes cluster using Jenkins.
+
+Whenever code is pushed to the develop branch on GitHub, Jenkins:
+
+Builds a Docker image
+
+Pushes it to Docker Hub
+
+Deploys the updated image to Kubernetes (staging environment)
+
+🧰 Tech Stack
+
+Version Control: GitHub
+
+CI/CD Tool: Jenkins
+
+Containerization: Docker
+
+Container Registry: Docker Hub
+
+Orchestration: Kubernetes (Self-managed, not EKS)
+
+Web Server: Nginx / Apache
+
+OS: Linux (EC2)
+
+🏗️ Architecture
+GitHub (develop branch)
+        ↓
+     Jenkins
+        ↓
+Docker Image Build
+        ↓
+   Docker Hub
+        ↓
+ Kubernetes Cluster
+   (staging namespace)
+
+Infrastructure:
+
+Jenkins Server (EC2)
+
+Kubernetes Cluster (Master + Worker Nodes)
+
+Docker Hub as image registry
+
+📂 Repository Structure
+
+`
+├── Dockerfile
+├── Jenkinsfile
+├── deployment.yaml
+└── README.md
+`
+
+🔄 CI/CD Pipeline Flow
+1️⃣ Code Push
+
+Developer pushes code to develop branch
+
+2️⃣ Jenkins Trigger
+
+Jenkins pipeline starts automatically via GitHub webhook
+
+3️⃣ Build Stage
+
+Docker image is built using Dockerfile
+
+4️⃣ Push Stage
+
+Image is pushed to Docker Hub with versioned tags
+
+5️⃣ Deploy Stage
+
+Kubernetes deployment is updated using kubectl set image
+
+Zero-downtime rollout handled by Kubernetes
+
+🔐 Jenkins Credentials Used
+Credential	Purpose
+GitHub PAT	Repository access
+Docker Hub creds	Push Docker images
+kubeconfig	Access Kubernetes cluster
+
+
+📜 Sample Jenkinsfile Stages
+
+Checkout Code
+
+Build Docker Image
+
+Push Image to Docker Hub
+
+Deploy to Kubernetes (staging)
+
+🛠️ Kubernetes Deployment
+
+Uses Deployment resource
+
+Runs inside staging namespace
+
+Image updates handled via rolling updates
+
+Supports scaling and rollback
+
+🧪 Verification Commands
+kubectl get pods -n staging
+kubectl rollout status deployment/<deployment-name> -n staging
+kubectl logs <pod-name> -n staging
+
+🎯 Key Learnings
+
+Jenkins pipeline design using declarative syntax
+
+Secure credential handling in CI/CD
+
+Docker image versioning and registry integration
+
+Kubernetes deployments using kubectl
+
+End-to-end automation from GitHub to Kubernetes
+
+🚧 Future Improvements
+
+Add Helm for Kubernetes deployments
+
+Introduce Blue/Green or Canary deployments
+
+Add automated testing stage
+
+Implement monitoring with Prometheus & Grafana
+
+👤 Author
+
+Nashit Ahmad
+Cloud & DevOps Engineer
+AWS | Docker | Kubernetes | Jenkins
